@@ -1,6 +1,8 @@
 package com.andrei.supermarket.domain;
 
-public record Product(String name, int price, Offer offer) {
+import java.util.List;
+
+public record Product(String name, int price, List<Offer> offers) {
     public Product {
         if (name == null || name.isEmpty()) {
             throw new IllegalArgumentException("Product name cannot be null or empty");

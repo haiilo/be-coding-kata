@@ -2,18 +2,26 @@
   {
     "name": "Apple",
     "price": 30,
-    "offer": {
-      "quantity": 2,
-      "price": 45
-    }
+    "offers": [
+      {
+        "quantity": 2,
+        "price": 45
+      },
+      {
+        "quantity": 5,
+        "price": 100
+      }
+    ]
   },
   {
     "name": "Banana",
     "price": 50,
-    "offer": {
-      "quantity": 3,
-      "price": 130
-    }
+    "offers": [
+      {
+        "quantity": 3,
+        "price": 130
+      }
+    ]
   },
   {
     "name": "Peach",

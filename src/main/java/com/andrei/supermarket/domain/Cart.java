@@ -25,12 +25,18 @@ public class Cart {
     }
 
     private int getProductTotal(Product product, Integer quantity) {
-        if (product.offer() != null) {
-            int offerTotal = (quantity / product.offer().quantity()) * product.offer().price();
-            int outOfOfferTotal = (quantity % product.offer().quantity()) * product.price();
-            return offerTotal + outOfOfferTotal;
-        } else {
-            return quantity * product.price();
+        if (product.offers() != null && !product.offers().isEmpty()) {
+            return product.offers().stream()
+                    .mapToInt(offer -> calculateOfferPrice(offer, product.price(), quantity))
+                    .min()
+                    .orElse(quantity * product.price());
         }
+        return quantity * product.price();
+    }
+
+    private int calculateOfferPrice(Offer offer, int unitPrice, int quantity) {
+        int offerTotal = (quantity / offer.quantity()) * offer.price();
+        int remainderTotal = (quantity % offer.quantity()) * unitPrice;
+        return offerTotal + remainderTotal;
     }
 }

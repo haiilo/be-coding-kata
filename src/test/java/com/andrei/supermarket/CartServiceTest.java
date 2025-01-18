@@ -38,12 +38,12 @@ class CartServiceTest {
 
     @Test
     void scanItemAddsProductToCart() {
-        ProductModel productModel = new ProductModel("Apple", 30, new OfferModel(1L, 2, 45));
+        ProductModel productModel = new ProductModel("Apple", 30, List.of(new OfferModel(1L, 2, 45)));
         when(productRepository.findById("Apple")).thenReturn(Optional.of(productModel));
 
         cartService.scanItem("Apple");
 
-        verify(cart, times(1)).scanItem(new Product("Apple", 30, new Offer(2, 45)));
+        verify(cart, times(1)).scanItem(new Product("Apple", 30, List.of(new Offer(2, 45))));
     }
 
     @Test

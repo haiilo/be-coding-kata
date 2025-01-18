@@ -9,6 +9,8 @@ import com.andrei.supermarket.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @Service
 public class CartService {
@@ -28,7 +30,9 @@ public class CartService {
     }
 
     private Product fromModel(ProductModel productModel) {
-        Offer offer = new Offer(productModel.getOffer().getQuantity(), productModel.getOffer().getPrice());
-        return new Product(productModel.getName(), productModel.getPrice(), offer);
+        List<Offer> offers = productModel.getOffers().stream()
+                .map((offerModel) -> new Offer(offerModel.getQuantity(), offerModel.getPrice()))
+                .toList();
+        return new Product(productModel.getName(), productModel.getPrice(), offers);
     }
 }
