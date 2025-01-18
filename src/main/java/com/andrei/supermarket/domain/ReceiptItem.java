@@ -1,4 +1,6 @@
 package com.andrei.supermarket.domain;
 
-public record ReceiptItem(String productName, int quantity, int price) {
+import java.math.BigDecimal;
+
+public record ReceiptItem(String productName, int quantity, BigDecimal price) {
 }

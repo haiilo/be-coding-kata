@@ -30,7 +30,7 @@ public class SupermarketApplication {
                 try {
                     List<ProductModel> products = objectMapper.readValue(
                             new File("src/main/resources/products.json"),
-                            new TypeReference<List<ProductModel>>() {}
+                            new TypeReference<>() {}
                     );
                     productRepository.saveAll(products);
                 } catch (IOException e) {

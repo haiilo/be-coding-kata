@@ -1,5 +1,6 @@
 package com.andrei.supermarket.domain;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,7 +15,7 @@ public class Cart {
                     int quantity = entry.getValue();
                     return new ReceiptItem(product.name(), quantity, getProductTotal(product, quantity));
                 }).toList();
-        return new Receipt(receiptItems, receiptItems.stream().mapToInt(ReceiptItem::price).sum());
+        return new Receipt(receiptItems, receiptItems.stream().map(ReceiptItem::price).reduce(BigDecimal.ZERO, BigDecimal::add));
     }
 
     public void scanItem(Product product) {
@@ -24,20 +25,20 @@ public class Cart {
         productsQuantities.put(product, productsQuantities.getOrDefault(product, 0) + 1);
     }
 
-    private int getProductTotal(Product product, Integer quantity) {
+    private BigDecimal getProductTotal(Product product, Integer quantity) {
         if (product.offers() != null && !product.offers().isEmpty()) {
             return product.offers().stream()
-                    .mapToInt(offer -> calculateOfferPrice(offer, product.price(), quantity))
-                    .min()
-                    .orElse(quantity * product.price());
+                    .map(offer -> calculateOfferPrice(offer, product.price(), quantity))
+                    .min(BigDecimal::compareTo)
+                    .orElse(product.price().multiply(BigDecimal.valueOf(quantity)));
         }
-        return quantity * product.price();
+        return product.price().multiply(BigDecimal.valueOf(quantity));
     }
 
-    private int calculateOfferPrice(Offer offer, int unitPrice, int quantity) {
-        int offerTotal = (quantity / offer.quantity()) * offer.price();
-        int remainderTotal = (quantity % offer.quantity()) * unitPrice;
-        return offerTotal + remainderTotal;
+    private BigDecimal calculateOfferPrice(Offer offer, BigDecimal unitPrice, int quantity) {
+        BigDecimal offerTotal = BigDecimal.valueOf(quantity / offer.quantity()).multiply(offer.price());
+        BigDecimal remainderTotal = BigDecimal.valueOf(quantity % offer.quantity()).multiply(unitPrice);
+        return offerTotal.add(remainderTotal);
     }
 
     public void emptyCart() {

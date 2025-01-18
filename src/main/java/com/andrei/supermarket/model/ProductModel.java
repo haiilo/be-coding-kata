@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Entity
@@ -18,7 +19,7 @@ import java.util.List;
 public class ProductModel {
     @Id
     private String name;
-    private int price;
+    private BigDecimal price;
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "product_name", referencedColumnName = "name")
     private List<OfferModel> offers;
