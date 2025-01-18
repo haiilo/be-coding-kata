@@ -1,4 +1,4 @@
-package com.andrei.supermarket;
+package com.andrei.supermarket.domain;
 
 public record Offer(int quantity, int price) {
     public Offer {

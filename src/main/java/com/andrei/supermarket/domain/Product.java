@@ -1,4 +1,4 @@
-package com.andrei.supermarket;
+package com.andrei.supermarket.domain;
 
 public record Product(String name, int price, Offer offer) {
     public Product {

@@ -1,4 +1,4 @@
-package com.andrei.supermarket;
+package com.andrei.supermarket.domain;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -1,4 +1,4 @@
-package com.andrei.supermarket;
+package com.andrei.supermarket.domain;
 
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
