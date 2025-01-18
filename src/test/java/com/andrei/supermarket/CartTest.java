@@ -3,6 +3,7 @@ package com.andrei.supermarket;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 public class CartTest {
     @Test
@@ -42,7 +43,15 @@ public class CartTest {
         cart.scanItem(apple);
         cart.scanItem(apple);
         cart.scanItem(apple);
-        cart.scanItem(new Product("Banana", 50, new Offer(3, 130)));
-        assertThat(cart.totalPrice()).isEqualTo(125);
+        cart.scanItem(new Product("No offer", 10, null));
+        assertThat(cart.totalPrice()).isEqualTo(85);
+    }
+
+    @Test
+    void cartThrowsExceptionForNullProduct() {
+        Cart cart = new Cart();
+        assertThatThrownBy(() -> cart.scanItem(null))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("Product cannot be null");
     }
 }
