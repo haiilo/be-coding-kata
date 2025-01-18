@@ -3,6 +3,7 @@ package com.andrei.supermarket;
 import com.andrei.supermarket.domain.Cart;
 import com.andrei.supermarket.domain.Offer;
 import com.andrei.supermarket.domain.Product;
+import com.andrei.supermarket.domain.Receipt;
 import com.andrei.supermarket.model.ProductModel;
 import com.andrei.supermarket.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
@@ -22,8 +23,8 @@ public class CartService {
         cart.scanItem(fromModel(productModel));
     }
 
-    public int totalPrice() {
-        return cart.totalPrice();
+    public Receipt getReceipt() {
+        return cart.generateReceipt();
     }
 
     private Product fromModel(ProductModel productModel) {

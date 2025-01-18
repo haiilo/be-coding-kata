@@ -1,13 +1,20 @@
 package com.andrei.supermarket.domain;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Cart {
     private final Map<Product, Integer> productsQuantities = new HashMap<>();
-    public int totalPrice() {
-        return productsQuantities.entrySet().stream()
-                .mapToInt((entry) -> getProductTotal(entry.getKey(), entry.getValue())).sum();
+
+    public Receipt generateReceipt() {
+        List<ReceiptItem> receiptItems = productsQuantities.entrySet().stream().map(
+                (entry) -> {
+                    Product product = entry.getKey();
+                    int quantity = entry.getValue();
+                    return new ReceiptItem(product.name(), quantity, getProductTotal(product, quantity));
+                }).toList();
+        return new Receipt(receiptItems, receiptItems.stream().mapToInt(ReceiptItem::price).sum());
     }
 
     public void scanItem(Product product) {

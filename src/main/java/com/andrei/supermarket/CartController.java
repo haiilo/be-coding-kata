@@ -1,5 +1,6 @@
 package com.andrei.supermarket;
 
+import com.andrei.supermarket.domain.Receipt;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -30,20 +31,21 @@ public class CartController {
 
     @PostMapping("/scan")
     @ResponseStatus(HttpStatus.OK)
-    public void scanItem(String productName) {
+    public String scanItem(String productName) {
         cartService.scanItem(productName);
+        return String.format("%s scanned", productName);
     }
 
-    @Operation(summary = "Get the total price of items in the cart")
+    @Operation(summary = "Get the receipt containng the products in the cart with the applied discounts and the total")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Total price retrieved successfully"),
             @ApiResponse(responseCode = "500", description = "Internal server error",
                     content = @Content(mediaType = "application/json"))
     })
-    @GetMapping("/total")
+    @GetMapping("/receipt")
     @ResponseStatus(HttpStatus.OK)
-    public int getTotalPrice() {
-        return cartService.totalPrice();
+    public Receipt getReceipt() {
+        return cartService.getReceipt();
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
