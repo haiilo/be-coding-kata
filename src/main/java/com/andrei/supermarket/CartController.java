@@ -48,6 +48,13 @@ public class CartController {
         return cartService.getReceipt();
     }
 
+    @PostMapping("/empty")
+    @ResponseStatus(HttpStatus.OK)
+    public String emptyCart() {
+        cartService.emptyCart();
+        return "Emptied cart";
+    }
+
     @ExceptionHandler(IllegalArgumentException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public String handleIllegalArgumentException(IllegalArgumentException e) {

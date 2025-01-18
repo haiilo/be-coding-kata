@@ -96,6 +96,19 @@ public class CartTest {
         assertThat(appleItem.price()).isEqualTo(100);
     }
 
+    @Test
+    void cartEmptyCartWithItemsGeneratesEmptyReceipt() {
+        Cart cart = new Cart();
+        Product apple = new Product("Apple", 30, List.of(
+                new Offer(2, 45)
+        ));
+        cart.scanItem(apple);
+        cart.emptyCart();
+        Receipt receipt = cart.generateReceipt();
+
+        assertThat(receipt.items()).isEmpty();
+        assertThat(receipt.total()).isZero();
+    }
 
     @Test
     void cartThrowsExceptionForNullProduct() {

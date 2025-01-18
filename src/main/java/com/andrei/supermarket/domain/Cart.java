@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 public class Cart {
-    private final Map<Product, Integer> productsQuantities = new HashMap<>();
+    private Map<Product, Integer> productsQuantities = new HashMap<>();
 
     public Receipt generateReceipt() {
         List<ReceiptItem> receiptItems = productsQuantities.entrySet().stream().map(
@@ -38,5 +38,9 @@ public class Cart {
         int offerTotal = (quantity / offer.quantity()) * offer.price();
         int remainderTotal = (quantity % offer.quantity()) * unitPrice;
         return offerTotal + remainderTotal;
+    }
+
+    public void emptyCart() {
+        productsQuantities = new HashMap<>();
     }
 }

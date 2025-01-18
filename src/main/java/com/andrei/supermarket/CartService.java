@@ -35,4 +35,8 @@ public class CartService {
                 .toList();
         return new Product(productModel.getName(), productModel.getPrice(), offers);
     }
+
+    public void emptyCart() {
+        cart.emptyCart();
+    }
 }

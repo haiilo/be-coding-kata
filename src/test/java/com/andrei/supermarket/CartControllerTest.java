@@ -70,4 +70,11 @@ public class CartControllerTest {
         assertThat(generatedReceipt.items()).isEmpty();
         assertThat(generatedReceipt.total()).isZero();
     }
+
+    @Test
+    void testEmptyCart() {
+        String response = cartController.emptyCart();
+        assertThat(response).isEqualTo("Emptied cart");
+        verify(cartService, times(1)).emptyCart();
+    }
 }

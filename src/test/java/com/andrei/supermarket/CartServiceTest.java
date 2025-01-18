@@ -94,4 +94,10 @@ class CartServiceTest {
         assertThat(generatedReceipt.items()).isEmpty();
         assertThat(generatedReceipt.total()).isZero();
     }
+
+    @Test
+    void testEmptyCart() {
+        cartService.emptyCart();
+        verify(cart).emptyCart();
+    }
 }
